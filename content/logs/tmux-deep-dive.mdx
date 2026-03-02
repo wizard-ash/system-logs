@@ -1,0 +1,50 @@
+export const metadata = {
+  title: "Built system-logs From Scratch",
+  date: "2026-03-02",
+  category: "logs",
+  concept: "Created a personal knowledge base to force clear writing about what I'm learning",
+  tags: ["system-logs", "next.js", "mdx", "project-start"],
+  related: ["system-logs", "on-writing-clearly"],
+}
+
+## What Happened
+
+Built a personal knowledge base as a Next.js static site. The idea: every time
+I learn something, I write it up in a structured format. Not notes — actual
+documents that would make sense to someone else (or to me in six months).
+
+## Why
+
+I kept running into the same problem: I'd learn something, take scattered notes,
+and forget the details within weeks. Stack Overflow answers and random bookmarks
+don't stick. Writing forces you to organize what you know, and a site gives the
+writing a home.
+
+## Decisions Made
+
+- **Next.js 16 + MDX** for the framework. I already know React, and MDX lets me
+  write content as `.mdx` files with typed metadata exports. No CMS, no database.
+- **Static export** (`output: "export"`) so there's no server to manage.
+- **Four sections**: manual (reference docs), logs (what happened today), projects
+  (build post-mortems), thinking (ideas and mental models).
+- **Terminal aesthetic** with green-on-black, ASCII art, and monospace fonts. Not
+  necessary, but it makes me want to use the thing.
+- **Fuse.js** for client-side search. All content is local, no need for Algolia.
+
+## What I Learned
+
+1. MDX metadata via `export const metadata = {...}` is cleaner than YAML frontmatter.
+   No parsing ambiguity, works with TypeScript.
+2. Dynamic imports at build time (`await import(...)`) can extract both the component
+   and the metadata from a single `.mdx` file.
+3. Having a writing framework *before* writing content matters. My first attempt at
+   a manual entry was unfocused. Once I defined what each section should look like,
+   the writing got sharper.
+4. Static site generation with Next.js requires `generateStaticParams()` for dynamic
+   routes. Each content file needs a corresponding static path.
+
+## What's Next
+
+- Write more manual entries (starting with C fundamentals from K&R)
+- Set up deployment (GitHub Pages)
+- See if the writing framework actually holds up after 10+ entries

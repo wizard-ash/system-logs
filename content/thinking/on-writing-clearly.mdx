@@ -1,0 +1,111 @@
+export const metadata = {
+  title: "How to Write Clearly in system-logs",
+  date: "2026-03-02",
+  category: "thinking",
+  concept: "The writing principles behind this site — why succinctness matters and how to achieve it",
+  tags: ["writing", "communication", "meta", "mental-models"],
+  related: ["system-logs"],
+}
+
+## The Problem
+
+You learn something. You take notes. Three months later, the notes are
+incomprehensible — full of abbreviations, missing context, and half-finished
+thoughts. The knowledge is gone. You have to relearn it from scratch.
+
+This happens because notes are written for present-you, who already has all
+the context. Documents need to be written for future-you, who has none.
+
+## The Principle
+
+**State what you know. State what it means. State what to do about it.**
+
+That's the entire framework. Every section in system-logs follows this:
+
+- **Manual entries** state *what something is* (facts), *why it matters*
+  (meaning), and *how to use it* (action).
+- **Log entries** state *what happened*, *what you learned from it*,
+  and *what you'll do differently*.
+- **Project entries** state *what you built*, *what worked and what didn't*,
+  and *what the lessons are*.
+- **Thinking entries** state *the idea*, *the argument for and against*,
+  and *how it changes your behavior*.
+
+If any of the three layers is missing, the document is incomplete.
+
+## Rules for Succinctness
+
+### 1. Lead with the point
+
+Don't build up to the conclusion. State it first. Then provide evidence.
+A reader should get the core message from the first sentence of each section.
+
+Bad:
+> After researching various approaches to terminal multiplexing and
+> considering the trade-offs between different tools, I concluded that
+> tmux is the right choice because...
+
+Good:
+> tmux is the right choice for terminal multiplexing. Here's why.
+
+### 2. One idea per section
+
+If you can't name the section in 3 words, it contains more than one idea.
+Split it. Sections with clear headings are scannable. Walls of text are not.
+
+### 3. Concrete over abstract
+
+Code, commands, diagrams, and tables beat prose. Show the thing, then
+explain it. Don't explain it and hope the reader imagines the thing.
+
+Bad:
+> Pointer arithmetic in C adjusts the address by the size of the
+> pointed-to type, which means that adding one to a pointer to an
+> integer advances the address by four bytes on most systems.
+
+Good:
+> ```c
+> int arr[] = {10, 20, 30};
+> int *p = arr;
+> // p + 1 advances by sizeof(int) = 4 bytes, not 1 byte
+> ```
+
+### 4. Include failure modes
+
+Knowing what works is half the picture. Knowing what breaks — and *how* it
+breaks — is the other half. Every manual entry should have a "common mistakes"
+or "failure modes" section.
+
+### 5. Cut filler words
+
+- "In order to" → "to"
+- "It is important to note that" → cut entirely
+- "Basically" → cut
+- "As previously mentioned" → cut
+- "Due to the fact that" → "because"
+
+If removing a word doesn't change the meaning, remove it.
+
+### 6. Use tables for comparisons
+
+If you're comparing more than two things across more than one dimension,
+use a table. Prose comparisons are harder to scan and easier to misread.
+
+## Why This Matters
+
+Writing isn't separate from learning. Writing *is* learning. The act of
+translating a vague understanding into precise sentences is where the
+real comprehension happens.
+
+If you can explain something clearly in a short document, you understand it.
+If you can't, you don't — no matter how well you can use it in practice.
+The engineer who can write a binary search but can't explain *why* it requires
+sorted input has skill without understanding.
+
+## How This Changes Behavior
+
+1. Every learning session produces a document, not notes.
+2. Before writing, ask: what do I know, what does it mean, what should I do?
+3. After writing, cut 30%. The first draft is always too long.
+4. Rewrite when understanding deepens — don't append. The document should
+   reflect current understanding, not a history of confusion.

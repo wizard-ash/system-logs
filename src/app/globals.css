@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/* ── Tailwind v4 Theme ── */
+@theme inline {
+  --color-terminal-green: #00ff00;
+  --color-terminal-cyan: #00ffff;
+  --color-terminal-red: #ff0000;
+  --color-terminal-darkbg: #0a0a0a;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* ── Base ── */
+body {
+  background-color: #000;
+  color: #00ff00;
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* ── CRT Scanline Overlay ── */
+.scanlines::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 0, 0, 0.08) 1px,
+    rgba(0, 0, 0, 0.08) 2px
+  );
+}
+
+/* ── Glow Utilities ── */
+.text-glow-red {
+  text-shadow: 0 0 8px rgba(255, 0, 0, 0.6), 0 0 20px rgba(255, 0, 0, 0.3);
+}
+
+.text-glow-green {
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.4), 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.4), 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+/* ── Code Blocks (rehype-pretty-code) ── */
+[data-rehype-pretty-code-figure] pre {
+  background-color: #0a0a0a !important;
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  border-radius: 0.375rem;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.05);
+}
+
+[data-rehype-pretty-code-figure] code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* Code block title */
+[data-rehype-pretty-code-title] {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  color: rgba(0, 255, 255, 0.6);
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  border-bottom: none;
+  border-radius: 0.375rem 0.375rem 0 0;
+  padding: 0.4rem 1rem;
+  background-color: #0a0a0a;
+  margin-top: 1.5rem;
+}
+
+[data-rehype-pretty-code-title] + pre {
+  margin-top: 0 !important;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* Highlighted lines */
+[data-highlighted-line] {
+  background-color: rgba(0, 255, 0, 0.08);
+  border-left: 2px solid #00ff00;
+  padding-left: 0.75rem;
+  margin-left: -1rem;
+}
+
+/* Line numbers */
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1.5rem;
+  margin-right: 1rem;
+  text-align: right;
+  color: rgba(0, 255, 0, 0.25);
+}
+
+code[data-line-numbers] {
+  counter-reset: line;
+}
+
+/* ── Selection ── */
+::selection {
+  background-color: rgba(0, 255, 0, 0.3);
+  color: #000;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 0, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 0, 0.5);
+}

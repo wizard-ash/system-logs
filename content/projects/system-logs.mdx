@@ -1,0 +1,88 @@
+export const metadata = {
+  title: "system-logs",
+  date: "2026-03-02",
+  category: "projects",
+  concept: "A personal knowledge base built as a static site — forces structured writing about what you learn",
+  tags: ["next.js", "mdx", "tailwind", "knowledge-base", "static-site"],
+  related: ["on-writing-clearly"],
+}
+
+## What Is This
+
+A static site where I write up everything I learn. Four sections:
+
+- **Manual** — permanent reference docs (like a personal man page)
+- **Logs** — what happened today, what I learned
+- **Projects** — post-mortems on things I built
+- **Thinking** — longer-form ideas and mental models
+
+The point isn't to have a wiki. The point is that writing forces understanding.
+If I can't explain it clearly in a document, I don't understand it well enough.
+
+## Stack
+
+| Layer | Choice | Why |
+|-------|--------|-----|
+| Framework | Next.js 16 | Already know React. MDX is first-class. Static export works. |
+| Content | MDX files | Typed metadata exports, JSX in content, no YAML parsing |
+| Styling | Tailwind v4 | Fast to write, terminal aesthetic maps well to utilities |
+| Search | Fuse.js | Client-side, zero infrastructure, good enough for personal use |
+| Code highlighting | rehype-pretty-code + Shiki | Build-time, no client JS for syntax colors |
+| Deployment | Static export | No server. `bun run build` → directory of HTML files |
+
+## Architecture
+
+```
+content/
+  manual/{category}/{slug}.mdx    → /manual/{category}/{slug}
+  logs/{slug}.mdx                 → /logs/{slug}
+  projects/{slug}.mdx             → /projects/{slug}
+  thinking/{slug}.mdx             → /thinking/{slug}
+
+src/lib/content.ts
+  - Reads filesystem at build time
+  - Dynamic imports extract metadata from each .mdx file
+  - generateStaticParams() pre-renders all routes
+```
+
+Each MDX file exports a `metadata` object:
+
+```typescript
+export const metadata = {
+  title: "...",
+  date: "YYYY-MM-DD",
+  category: "...",
+  concept: "one-line summary",
+  tags: ["..."],
+  related: ["..."],
+}
+```
+
+This gets picked up by `content.ts` for indexes, search, and route generation.
+
+## What Went Right
+
+- **MDX metadata pattern** — exporting a typed object beats YAML frontmatter.
+  No parsing edge cases, works with TypeScript, IDE autocomplete works.
+- **Terminal aesthetic** — green on black, ASCII borders, Matrix rain. Makes writing
+  entries feel satisfying. Aesthetic is a retention feature, not decoration.
+- **Static export** — no deployment complexity. The bottleneck is content quality,
+  never infrastructure.
+
+## What Went Wrong
+
+- **Started writing content before defining a writing framework.** First entries
+  were unfocused. Should have figured out what "good" looks like before writing.
+- **Forgot `[slug]` routes for logs/projects/thinking.** Had index pages but no
+  way to view individual entries. Caught it before deploying.
+
+## Lessons
+
+1. Define how you write before you start writing. Framework first, content second.
+2. If the tool doesn't feel good to use, you won't use it. Invest in the aesthetic.
+3. Start with one real example per section. Templates are abstract — examples are concrete.
+
+## Status
+
+Active. v0.1. Core framework working, example entries in each section.
+Next: more manual entries, deployment, see if the writing habit sticks.

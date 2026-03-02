@@ -1,0 +1,209 @@
+export const metadata = {
+  title: "TMUX — Terminal Multiplexing Operations",
+  date: "2026-03-02",
+  category: "tools",
+  concept: "Session persistence, window management, and pane control for terminal-based operations",
+  tags: ["tmux", "terminal", "multiplexing", "remote-ops", "sessions"],
+  related: ["ssh-tunneling", "terminal-emulators", "screen-vs-tmux"],
+}
+
+## TMUX
+
+Terminal multiplexer. Lets you run persistent sessions that survive connection
+drops, split your terminal into panes, and switch between windows. If your SSH
+drops and your process dies, you failed to use tmux.
+
+---
+
+## Architecture — Three Layers
+
+TMUX operates on a three-tier hierarchy: server → session → window → pane.
+
+```
+┌─────────────────────────────────────────┐
+│              TMUX SERVER                │
+│                                         │
+│  ┌─── SESSION: "recon" ─────────────┐   │
+│  │                                   │   │
+│  │  ┌─ WINDOW 0: "editor" ───────┐  │   │
+│  │  │                             │  │   │
+│  │  │  ┌─ PANE 0 ─┬─ PANE 1 ─┐   │  │   │
+│  │  │  │  vim      │  build   │   │  │   │
+│  │  │  │           │          │   │  │   │
+│  │  │  ├───────────┴──────────┤   │  │   │
+│  │  │  │      PANE 2          │   │  │   │
+│  │  │  │      logs            │   │  │   │
+│  │  │  └──────────────────────┘   │  │   │
+│  │  └─────────────────────────────┘  │   │
+│  │                                   │   │
+│  │  ┌─ WINDOW 1: "monitor" ──────┐  │   │
+│  │  │  ...                        │  │   │
+│  │  └─────────────────────────────┘  │   │
+│  └───────────────────────────────────┘   │
+│                                         │
+│  ┌─── SESSION: "deploy" ────────────┐   │
+│  │  ...                              │   │
+│  └───────────────────────────────────┘   │
+└─────────────────────────────────────────┘
+```
+
+| Layer | Description | Contains |
+|-------|-------------|----------|
+| **Session** | Top-level grouping. One per project or context. | Windows |
+| **Window** | A full-screen tab within a session. | Panes |
+| **Pane** | A subdivided region of a window. | A single shell |
+
+---
+
+## Session Operations
+
+### Creating Sessions
+
+```bash
+# New session (auto-named: 0, 1, 2...)
+tmux
+
+# New session with explicit name (RECOMMENDED)
+tmux new -s "recon"
+```
+
+### Detaching and Attaching
+
+This is the core value proposition. Detach = session persists. Reattach at will.
+
+```bash
+# Detach from current session
+# KEYBIND: ctrl+b  then  d
+```
+
+```bash
+# List all active sessions
+tmux ls
+
+# Reattach to most recent session
+tmux a
+
+# Reattach to a specific session by name
+tmux a -t recon
+```
+
+> **NOTE:** The `-t` flag means **target**. It appears throughout tmux.
+> Learn it once, use it everywhere.
+
+### Destroying Sessions
+
+```bash
+# Kill most recent session
+tmux kill-session
+
+# Kill a specific session by name
+tmux kill-session -t "recon"
+
+# NUCLEAR: Kill the entire tmux server (all sessions, all windows, all panes)
+tmux kill-server
+```
+
+---
+
+## Window Operations
+
+Windows are tabs within a session. All commands below use the **prefix key**
+`ctrl+b` followed by the specified key.
+
+| Operation | Keybind | Notes |
+|-----------|---------|-------|
+| New window | `ctrl+b` `c` | Creates window with default shell |
+| Next window | `ctrl+b` `n` | Move sequentially forward |
+| Previous window | `ctrl+b` `p` | Move sequentially backward |
+| Rename window | `ctrl+b` `,` | Name your windows. Always. |
+| Window picker | `ctrl+b` `w` | Interactive list — best way to navigate |
+| Kill window | `ctrl+b` `&` | Destroys window and all its panes |
+
+```bash
+# Create a session — this also creates the first window (default: bash)
+tmux new -s stacy
+```
+
+---
+
+## Pane Operations
+
+Panes subdivide a window. All commands use prefix `ctrl+b`.
+
+### Splitting
+
+| Operation | Keybind | Mnemonic |
+|-----------|---------|----------|
+| Vertical split | `ctrl+b` `%` | `%` looks like two columns |
+| Horizontal split | `ctrl+b` `"` | `"` looks like two rows |
+
+### Navigation and Management
+
+| Operation | Keybind | Notes |
+|-----------|---------|-------|
+| Show pane indexes | `ctrl+b` `q` | Numbers flash briefly |
+| Jump to pane | `ctrl+b` `q` then `index` | Press number while indexes are visible |
+| Resize pane | Hold `ctrl` + arrow keys | Fine-grained control |
+| Kill pane | `ctrl+b` `x` | Confirm with `y` |
+
+---
+
+## Copy Mode
+
+Requires mouse support enabled in config:
+
+```bash
+# In ~/.tmux.conf
+set -g mouse on
+```
+
+### Copy Procedure
+
+| Step | Action | Keybind |
+|------|--------|---------|
+| 1 | Enter copy mode | `ctrl+b` `[` |
+| 2 | Navigate to start position | Arrow keys / mouse |
+| 3 | Begin selection | `Space` |
+| 4 | Move to end of selection | Arrow keys |
+| 5 | Paste | `ctrl+b` `]` |
+
+---
+
+## Failure Modes
+
+- **Nested tmux sessions** — Running `tmux` inside tmux. The prefix key gets intercepted by the outer session. Use `ctrl+b` `ctrl+b` to send prefix to inner session, or don't nest.
+- **Orphaned sessions** — Forgetting to kill sessions. They consume memory indefinitely. Audit with `tmux ls` regularly.
+- **Copy mode confusion** — Forgetting you're in copy mode. You'll type and nothing happens. Press `q` to exit.
+- **Misconfigured prefix** — Custom prefix keys that conflict with application shortcuts. Document your prefix if you change it.
+
+---
+
+## Quick Reference
+
+```
+SESSION:    tmux new -s NAME      Create named session
+            tmux ls               List sessions
+            tmux a -t NAME        Attach to session
+            tmux kill-session -t  Kill session
+            tmux kill-server      Kill everything
+
+WINDOW:     ctrl+b  c             New window
+            ctrl+b  n / p         Next / Previous
+            ctrl+b  ,             Rename
+            ctrl+b  w             Window picker
+            ctrl+b  &             Kill window
+
+PANE:       ctrl+b  %             Vertical split
+            ctrl+b  "             Horizontal split
+            ctrl+b  q             Show indexes
+            ctrl+b  x             Kill pane
+            hold ctrl + arrows    Resize
+
+COPY:       ctrl+b  [             Enter copy mode
+            Space                 Start selection
+            ctrl+b  ]             Paste
+
+META:       ctrl+b  d             Detach session
+            ctrl+b  ?             List all keybindings
+```
+
