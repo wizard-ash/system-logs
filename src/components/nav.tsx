@@ -9,7 +9,7 @@ export function Nav() {
 
   return (
     <nav>
-      <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+      <ul className="flex flex-wrap gap-x-3 sm:gap-x-6 gap-y-2 text-xs sm:text-sm">
         {navLinks.map((link) => {
           const isActive =
             link.href === "/"
@@ -28,7 +28,7 @@ export function Nav() {
               >
                 [{link.label}]
               </Link>
-              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-3 py-1.5 bg-black/95 border border-terminal-green/30 text-terminal-green/60 text-[0.65rem] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
+              <div className="hidden sm:block absolute left-1/2 -translate-x-1/2 top-full mt-2 px-3 py-1.5 bg-black/95 border border-terminal-green/30 text-terminal-green/60 text-[0.65rem] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
                 {link.hint}
               </div>
             </li>

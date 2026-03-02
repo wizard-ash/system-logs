@@ -5,10 +5,10 @@ export function EntryCard({ entry }: { entry: EntryMetadata }) {
   return (
     <Link
       href={getEntryHref(entry)}
-      className="block border border-dashed border-terminal-green/30 p-4 hover:border-terminal-cyan/50 transition-colors duration-150"
+      className="block border border-dashed border-terminal-green/30 p-3 sm:p-4 hover:border-terminal-cyan/50 transition-colors duration-150"
     >
-      <div className="flex items-baseline justify-between gap-4">
-        <h3 className="text-terminal-cyan font-bold">{entry.title}</h3>
+      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+        <h3 className="text-terminal-cyan font-bold text-sm sm:text-base">{entry.title}</h3>
         <span className="text-terminal-green/40 text-xs shrink-0">
           {entry.date}
         </span>

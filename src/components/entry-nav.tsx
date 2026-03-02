@@ -13,7 +13,7 @@ export function EntryNav({
   }
 
   return (
-    <footer className="mt-12 border-t border-dashed border-terminal-green/40 pt-6 flex justify-between items-start gap-4">
+    <footer className="mt-10 sm:mt-12 border-t border-dashed border-terminal-green/40 pt-6 flex flex-col sm:flex-row justify-between items-start gap-4">
       {prev ? (
         <Link
           href={getEntryHref(prev)}

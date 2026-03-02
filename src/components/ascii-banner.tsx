@@ -1,8 +1,9 @@
 export function AsciiBanner() {
   return (
-    <div className="flex justify-center mb-8">
+    <div className="flex justify-center mb-6 sm:mb-8">
+      {/* Full banner for screens wide enough */}
       <pre
-        className="text-terminal-green text-[0.5rem] sm:text-xs md:text-sm leading-tight select-none text-center"
+        className="hidden sm:block text-terminal-green text-xs md:text-sm leading-tight select-none text-center"
         aria-hidden="true"
       >
         {[
@@ -20,6 +21,10 @@ export function AsciiBanner() {
           "    ╚══════╝ ╚═════╝  ╚═════╝ ╚══════╝",
         ].join("\n")}
       </pre>
+      {/* Compact text banner for mobile */}
+      <div className="sm:hidden text-terminal-green text-lg font-bold tracking-widest select-none text-glow-green">
+        SYSTEM LOGS
+      </div>
     </div>
   );
 }

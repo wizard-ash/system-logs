@@ -32,7 +32,7 @@ export default async function ThinkingEntryPage({
         <p className="text-terminal-green/40 text-xs mb-2">
           thinking / {slug}
         </p>
-        <h1 className="text-terminal-red text-3xl font-bold text-glow-red mb-2">
+        <h1 className="text-terminal-red text-2xl sm:text-3xl font-bold text-glow-red mb-2">
           {metadata.title}
         </h1>
         <div className="flex flex-wrap items-center gap-4 text-xs text-terminal-green/50">

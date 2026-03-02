@@ -18,7 +18,8 @@ export function MatrixRain() {
 
     const chars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,./<>?";
-    const fontSize = 14;
+    const isMobile = window.innerWidth < 640;
+    const fontSize = isMobile ? 18 : 14;
     let columns = 0;
     let drops: number[] = [];
     let speeds: number[] = [];

@@ -133,16 +133,19 @@ export function Search({ entries }: { entries: SearchEntry[] }) {
         }}
         className="flex items-center gap-2 text-xs text-terminal-green/40 hover:text-terminal-green/70 transition-colors"
       >
-        <span className="border border-terminal-green/20 px-2 py-0.5 rounded text-[0.6rem]">
+        <span className="hidden sm:inline border border-terminal-green/20 px-2 py-0.5 rounded text-[0.6rem]">
           ctrl+k
         </span>
-        <span>search {sectionLabel}</span>
+        <span className="sm:hidden border border-terminal-green/20 px-2 py-1 rounded text-[0.6rem]">
+          [search]
+        </span>
+        <span className="hidden sm:inline">search {sectionLabel}</span>
       </button>
     );
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[20vh]">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh] sm:pt-[20vh]">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/80"
@@ -177,7 +180,16 @@ export function Search({ entries }: { entries: SearchEntry[] }) {
             placeholder={`search ${sectionLabel} entries...`}
             className="w-full bg-transparent text-terminal-green py-3 text-sm outline-none placeholder:text-terminal-green/30 font-mono"
           />
-          <span className="text-terminal-green/20 text-xs ml-2">esc</span>
+          <button
+            onClick={() => {
+              setOpen(false);
+              setQuery("");
+            }}
+            className="sm:hidden text-terminal-green/40 text-xs ml-2 px-2 py-1 border border-terminal-green/20 rounded"
+          >
+            close
+          </button>
+          <span className="hidden sm:inline text-terminal-green/20 text-xs ml-2">esc</span>
         </div>
 
         {/* Results */}
@@ -226,8 +238,8 @@ export function Search({ entries }: { entries: SearchEntry[] }) {
           )}
         </div>
 
-        {/* Footer */}
-        <div className="border-t border-terminal-green/20 px-4 py-2 flex gap-4 text-[0.6rem] text-terminal-green/30">
+        {/* Footer — keyboard hints hidden on mobile */}
+        <div className="border-t border-terminal-green/20 px-4 py-2 hidden sm:flex gap-4 text-[0.6rem] text-terminal-green/30">
           <span>
             <kbd className="border border-terminal-green/20 px-1 rounded">
               ↑↓

@@ -24,19 +24,19 @@ export default function RootLayout({
     <html lang="en" className={jetbrainsMono.variable}>
       <body className="scanlines bg-black text-terminal-green font-mono min-h-screen antialiased">
         <MatrixRain />
-        <div className="relative max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-6 lg:px-10 py-8">
+        <div className="relative max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-8">
           {/* Classification banner */}
           <div className="text-center mb-4 select-none">
-            <span className="text-terminal-red/80 text-[0.6rem] tracking-[0.3em] uppercase text-glow-red">
+            <span className="text-terminal-red/80 text-[0.5rem] sm:text-[0.6rem] tracking-[0.2em] sm:tracking-[0.3em] uppercase text-glow-red">
               &#x2588;&#x2588; top secret {"// eyes only //"} classified &#x2588;&#x2588;
             </span>
           </div>
-          <div className="flex items-center justify-between mb-10 border-b border-dashed border-terminal-green/40 pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-8 sm:mb-10 border-b border-dashed border-terminal-green/40 pb-4">
             <Nav />
             <SearchProvider />
           </div>
           <main>{children}</main>
-          <footer className="border-t border-dashed border-terminal-green/40 mt-16 pt-6 text-terminal-green/40 text-xs">
+          <footer className="border-t border-dashed border-terminal-green/40 mt-12 sm:mt-16 pt-6 text-terminal-green/40 text-xs">
             <p>system-logs {"// "}{new Date().getFullYear()}</p>
             <p className="mt-1 text-terminal-red/60 text-[0.6rem] tracking-widest uppercase">
               unauthorized access will be logged and prosecuted

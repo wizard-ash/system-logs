@@ -3,22 +3,22 @@ import type { MDXComponents } from "mdx/types";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h1: ({ children }) => (
-      <h1 className="text-terminal-red text-3xl font-bold mb-4 text-glow-red">
+      <h1 className="text-terminal-red text-2xl sm:text-3xl font-bold mb-4 text-glow-red">
         {children}
       </h1>
     ),
     h2: ({ children }) => (
-      <h2 className="text-terminal-red text-2xl font-bold mt-10 mb-3 text-glow-red">
+      <h2 className="text-terminal-red text-xl sm:text-2xl font-bold mt-8 sm:mt-10 mb-3 text-glow-red">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-terminal-cyan text-xl font-bold mt-8 mb-2">
+      <h3 className="text-terminal-cyan text-lg sm:text-xl font-bold mt-6 sm:mt-8 mb-2">
         {children}
       </h3>
     ),
     h4: ({ children }) => (
-      <h4 className="text-terminal-cyan text-lg font-bold mt-6 mb-2">
+      <h4 className="text-terminal-cyan text-base sm:text-lg font-bold mt-5 sm:mt-6 mb-2">
         {children}
       </h4>
     ),
@@ -66,7 +66,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     },
     pre: ({ children, ...props }) => (
       <pre
-        className="bg-terminal-darkbg border border-terminal-green/30 rounded-md p-4 overflow-x-auto my-6 shadow-[0_0_10px_rgba(0,255,0,0.05)]"
+        className="bg-terminal-darkbg border border-terminal-green/30 rounded-md p-3 sm:p-4 overflow-x-auto my-4 sm:my-6 text-sm shadow-[0_0_10px_rgba(0,255,0,0.05)]"
         {...props}
       >
         {children}
@@ -89,12 +89,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </div>
     ),
     th: ({ children }) => (
-      <th className="border border-terminal-green/30 px-3 py-2 text-left text-terminal-cyan font-bold bg-terminal-darkbg">
+      <th className="border border-terminal-green/30 px-2 sm:px-3 py-1.5 sm:py-2 text-left text-terminal-cyan font-bold bg-terminal-darkbg text-xs sm:text-sm">
         {children}
       </th>
     ),
     td: ({ children }) => (
-      <td className="border border-terminal-green/30 px-3 py-2">{children}</td>
+      <td className="border border-terminal-green/30 px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm">{children}</td>
     ),
     ...components,
   };
